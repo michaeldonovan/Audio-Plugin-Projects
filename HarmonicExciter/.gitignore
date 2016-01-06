@@ -21,7 +21,3 @@ gui/*
 
 Icon?
 .DS_Stor*
-
-*/buildall-mac.command
-*/cleanup-mac.command
-duplicate.py

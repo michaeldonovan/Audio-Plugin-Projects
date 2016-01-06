@@ -45,7 +45,6 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   //arguments are: name, defaultVal, minVal, maxVal, step, label
   
   GetParam(kDistType)->InitInt("Type", 1, 1, 4);
-  GetParam(kAmount)->SetShape(1.0);
 
   GetParam(kDrive)->InitDouble("Input Gain", 0.0, 0.0, 20.0, 0.01, "dB");
   GetParam(kDrive)->SetShape(1.0);

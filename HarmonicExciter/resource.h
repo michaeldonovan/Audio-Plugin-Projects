@@ -1,27 +1,27 @@
 #define PLUG_MFR "Michael Donovan"
-#define PLUG_NAME "MultiDistortion"
+#define PLUG_NAME "HarmonicExciter"
 
-#define PLUG_CLASS_NAME MultiDistortion
+#define PLUG_CLASS_NAME HarmonicExciter
 
 #define BUNDLE_MFR "Michael Donovan"
-#define BUNDLE_NAME "MultiDistortion"
+#define BUNDLE_NAME "HarmonicExciter"
 
-#define PLUG_ENTRY MultiDistortion_Entry
-#define PLUG_VIEW_ENTRY MultiDistortion_ViewEntry
+#define PLUG_ENTRY HarmonicExciter_Entry
+#define PLUG_VIEW_ENTRY HarmonicExciter_ViewEntry
 
-#define PLUG_ENTRY_STR "MultiDistortion_Entry"
-#define PLUG_VIEW_ENTRY_STR "MultiDistortion_ViewEntry"
+#define PLUG_ENTRY_STR "HarmonicExciter_Entry"
+#define PLUG_VIEW_ENTRY_STR "HarmonicExciter_ViewEntry"
 
-#define VIEW_CLASS MultiDistortion_View
-#define VIEW_CLASS_STR "MultiDistortion_View"
+#define VIEW_CLASS HarmonicExciter_View
+#define VIEW_CLASS_STR "HarmonicExciter_View"
 
 // Format        0xMAJR.MN.BG - in HEX! so version 10.1.5 would be 0x000A0105
-#define PLUG_VER 0x00000101
-#define VST3_VER_STR "0.1.1"
+#define PLUG_VER 0x00000100
+#define VST3_VER_STR "0.1.0"
 
 // http://service.steinberg.de/databases/plugin.nsf/plugIn?openForm
 // 4 chars, single quotes. At least one capital letter
-#define PLUG_UNIQUE_ID 'y0ti'
+#define PLUG_UNIQUE_ID 'zvu2'
 // make sure this is not the same as BUNDLE_MFR
 #define PLUG_MFR_ID 'Dnvn'
 
@@ -34,7 +34,7 @@
 #endif
 
 #define PLUG_MFR_PT "MichaelDonovan\nMichaelDonovan\nDnvn"
-#define PLUG_NAME_PT "MultiDistortion\ny0ti"
+#define PLUG_NAME_PT "HarmonicExciter\nzvu2"
 #define PLUG_TYPE_PT "Effect"
 #define PLUG_DOES_AUDIOSUITE 1
 

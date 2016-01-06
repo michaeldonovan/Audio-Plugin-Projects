@@ -1,0 +1,4 @@
+HarmonicExciter changelog
+www.github.com/michaeldonovan
+
+01/05/15 0.1.0 initial release. No GUI yet.
