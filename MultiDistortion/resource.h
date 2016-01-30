@@ -3,7 +3,7 @@
 
 #define PLUG_CLASS_NAME MultiDistortion
 
-#define BUNDLE_MFR "Michael Donovan"
+#define BUNDLE_MFR "michaeldonovan"
 #define BUNDLE_NAME "MultiDistortion"
 
 #define PLUG_ENTRY MultiDistortion_Entry
@@ -16,8 +16,8 @@
 #define VIEW_CLASS_STR "MultiDistortion_View"
 
 // Format        0xMAJR.MN.BG - in HEX! so version 10.1.5 would be 0x000A0105
-#define PLUG_VER 0x00000101
-#define VST3_VER_STR "0.1.1"
+#define PLUG_VER 0x00000200
+#define VST3_VER_STR "0.2.0"
 
 // http://service.steinberg.de/databases/plugin.nsf/plugIn?openForm
 // 4 chars, single quotes. At least one capital letter
@@ -54,14 +54,20 @@ instrument determined by PLUG _IS _INST
 #define PLUG_DOES_STATE_CHUNKS 0
 
 // Unique IDs for each image resource.
-#define KNOB_ID 101
+#define BACKGROUND_ID 101
+#define BIGKNOB_ID 102
+#define SMALLKNOB_ID 103
+#define LEVELMETER_ID 104
 
 // Image resource locations for this plug.
-#define KNOB_FN "resources/img/knob.png"
+#define BACKGROUND_FN "resources/img/Background-wide.png"
+#define BIGKNOB_FN "resources/img/BigKnobAction.png"
+#define SMALLKNOB_FN "resources/img/SmallKnobAction.png"
+#define LEVELMETER_FN "resources/img/MeterAction.png"
 
 // GUI default dimensions
-#define GUI_WIDTH 300
-#define GUI_HEIGHT 300
+#define GUI_WIDTH 600
+#define GUI_HEIGHT 325
 
 // on MSVC, you must define SA_API in the resource editor preprocessor macros as well as the c++ ones
 #if defined(SA_API) && !defined(OS_IOS)
@@ -71,7 +77,7 @@ instrument determined by PLUG _IS _INST
 // vst3 stuff
 #define MFR_URL "www.github.com/michaeldonovan"
 #define MFR_EMAIL "spam@me.com"
-#define EFFECT_TYPE_VST3 "Fx"
+#define EFFECT_TYPE_VST3 "Fx|Distortion"
 
 /* "Fx|Analyzer"", "Fx|Delay", "Fx|Distortion", "Fx|Dynamics", "Fx|EQ", "Fx|Filter",
 "Fx", "Fx|Instrument", "Fx|InstrumentExternal", "Fx|Spatial", "Fx|Generator",

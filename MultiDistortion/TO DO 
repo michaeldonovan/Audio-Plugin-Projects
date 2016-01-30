@@ -1,0 +1,14 @@
+Add distortion type selector -- four buttons below the drive knob?
+ditch the biquads, they cause weird artifacts
+put clip level on a fader, add bypass
+probably get rid of shape/kAmount -- default it to middle value
+Warm->> Fat
+Oversampling??
+
+Clip level antialiasing/parameter smoothing?
+
+knob shape for gain knob?
+
+auto gain compensation
+
+remove units when you make your own level meter :)

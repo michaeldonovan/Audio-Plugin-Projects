@@ -26,8 +26,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4C4C4AFC1C3480D9005D264F /* denormal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4C4AFB1C3480D9005D264F /* denormal.h */; };
-		4C4C4AFD1C3480D9005D264F /* denormal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4C4AFB1C3480D9005D264F /* denormal.h */; };
 		4CDBDA601C3B64B000BFF9F5 /* Biquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CDBDA5E1C3B64B000BFF9F5 /* Biquad.cpp */; };
 		4CDBDA611C3B64B000BFF9F5 /* Biquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CDBDA5E1C3B64B000BFF9F5 /* Biquad.cpp */; };
 		4CDBDA621C3B64B000BFF9F5 /* Biquad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CDBDA5E1C3B64B000BFF9F5 /* Biquad.cpp */; };
@@ -448,7 +446,6 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		4C4C4AFB1C3480D9005D264F /* denormal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = denormal.h; sourceTree = "<group>"; };
 		4CD97A221C3D9B70006A53C3 /* HarmonicExciter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarmonicExciter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD97A241C3D9B70006A53C3 /* HarmonicExciter.vst */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonicExciter.vst; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD97A251C3D9B70006A53C3 /* HarmonicExciter.component */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HarmonicExciter.component; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -745,7 +742,6 @@
 			isa = PBXGroup;
 			children = (
 				52FBBED30D0CF143001C8B8A /* resource.h */,
-				4C4C4AFB1C3480D9005D264F /* denormal.h */,
 				4CDBDA5E1C3B64B000BFF9F5 /* Biquad.cpp */,
 				4CDBDA5F1C3B64B000BFF9F5 /* Biquad.h */,
 				52FBBED20D0CF13D001C8B8A /* HarmonicExciter.h */,
@@ -1353,7 +1349,6 @@
 				4F3AE17B12C0E5E2001FD7A4 /* resource.h in Headers */,
 				4F3AE17C12C0E5E2001FD7A4 /* HarmonicExciter.h in Headers */,
 				4FF016F7134E14E2001447BA /* mutex.h in Headers */,
-				4C4C4AFD1C3480D9005D264F /* denormal.h in Headers */,
 				4FF016F8134E14E2001447BA /* ptrlist.h in Headers */,
 				4FF016F9134E14E2001447BA /* wdlstring.h in Headers */,
 				4FD16D1913B634E5001D0217 /* swell.h in Headers */,
@@ -1426,7 +1421,6 @@
 				4F78DA9F13B640050032E0F3 /* Log.h in Headers */,
 				4F78DAA013B640050032E0F3 /* IPopupMenu.h in Headers */,
 				4F78DAA113B640050032E0F3 /* IPlugStructs.h in Headers */,
-				4C4C4AFC1C3480D9005D264F /* denormal.h in Headers */,
 				4F78DAA213B640050032E0F3 /* IPlug_Prefix.pch in Headers */,
 				4F78DAA313B640050032E0F3 /* IParam.h in Headers */,
 				4F78DAA413B640050032E0F3 /* IMidiQueue.h in Headers */,

@@ -5,8 +5,7 @@
 #include "IControl.h"
 #include "resource.h"
 #include "IAutoGUI.h"
-
-
+#include "../../WDL/denormal.h"
 
 
 const int kNumPrograms = 1;
@@ -16,7 +15,8 @@ enum EParams
   kType=0,
   kDrive = 1,
   kFreq=2,
-  kMix=4,
+  kMix=3,
+  kHarmOnly,
   kNumParams
 };
 
@@ -37,21 +37,23 @@ HarmonicExciter::HarmonicExciter(IPlugInstanceInfo instanceInfo)
 
   //arguments are: name, defaultVal, minVal, maxVal, step, label
   
-  GetParam(kType)->InitInt("Type", 1, 3, 1);
+  GetParam(kType)->InitInt("Type", 1, 1, 3);
+  GetParam(kType)->SetShape(1.0);
 
   GetParam(kDrive)->InitDouble("Input Gain", 0.0, 0.0, 18.0, 0.01, "dB");
   GetParam(kDrive)->SetShape(1.0);
 
-  GetParam(kFreq)->InitDouble("Frequency", 2000.0, 1750.0, 70000.00, 1.0, "Hz");
+  GetParam(kFreq)->InitDouble("Frequency", 2200.0, 1750.0, 7000.00, 1.0, "Hz");
   GetParam(kFreq)->SetShape(1.0);
 
   GetParam(kMix)->InitDouble("Mix", 50.0, 1.0, 99.0, 0.01, "%");
   GetParam(kMix)->SetShape(1.0);
   
-  //Initialize Filter
-  highPass.setBiquad(bq_type_highpass, 10000.0 / GetSampleRate(), .707, 0.0);
-
+  GetParam(kHarmOnly)->InitBool("Harmonics Only", TRUE);
   
+  //Initialize Filter
+  highPass.setBiquad(bq_type_highpass, 2200.0 / GetSampleRate(), .707, 0.0);
+
   //MakePreset("preset 1", ... );
   MakeDefaultPreset((char *) "-", kNumPrograms);
   
@@ -68,6 +70,7 @@ void HarmonicExciter::ProcessDoubleReplacing(double** inputs, double** outputs, 
     double* input = inputs[i];
     double* output = outputs[i];
     
+    
     for (int s = 0; s < nFrames; ++s, ++input, ++output) {
       double preGain = pow(10, mDrive/20.0);
   
@@ -77,50 +80,58 @@ void HarmonicExciter::ProcessDoubleReplacing(double** inputs, double** outputs, 
       //Drive
       sample*=preGain;
       
+      
+      
       //High-pass
-      highPass.process(sample);
-      highPass.process(sample);
+      sample = highPass.process(sample);
+      //sample = highPass.process(sample);
 
 
       //Add harmonics
-      switch (mType) {
+      if (WDL_DENORMAL_OR_ZERO_DOUBLE_AGGRESSIVE(&sample))
+        sample = 0.;
+      else{
+        switch (mType) {
 
-          case 1: //Full wave rectification
-          {
-            sample=fabs(sample);
-          }break;
+            case 1: //Full wave rectification
+            {
+              sample=fabs(sample);
+            }break;
        
           
-          case 2: // Assymetric clipping
+            case 2: // Assymetric clipping
+            {
+              if (sample>0.9) {
+                sample = 0.9;
+              }
+            }break;
+          
+          case 3: //Soft clipping
           {
-            if (sample>0.9) {
-              sample = 0.9;
-            }
+            double threshold = 0.95;
+            if(sample<threshold)
+              break;
+            else if(sample>threshold)
+              sample = threshold + (sample - threshold) / (1 + pow(((sample - threshold)/(1 - threshold)), 2));
+            else if(sample >1)
+              sample = (sample + 1)/2;
           }break;
-          
-        case 3: //Soft clipping
-        {
-          double threshold = 0.95;
-          if(sample<threshold)
-            break;
-          else if(sample>threshold)
-            sample = threshold + (sample - threshold) / (1 + pow(((sample - threshold)/(1 - threshold)), 2));
-          else if(sample >1)
-            sample = (sample + 1)/2;
-        }break;
-      
-          
+        }
       }
     
+      if(!mHarmOnly){
+        //Mix
+        sample=drySample+ sample*mMix;
+      }
       
-      //Mix
-      sample=drySample+ sample*mMix;
+
       
   
       *output=sample;
     }
   }
 }
+
 
 
 void HarmonicExciter::Reset()
@@ -146,14 +157,18 @@ void HarmonicExciter::OnParamChange(int paramIdx)
 
     case kFreq:
       mFreq = GetParam(kFreq)->Value();
-      highPass.Biquad::setFc(mFreq);
+      highPass.Biquad::setFc(mFreq/GetSampleRate());
       break;
       
     case kMix:
-      mMix = (GetParam(kMix)->Value() / 24) - 18;
+      mMix = 36*(GetParam(kMix)->Value() / 100.0) - 18;
       mMix=pow(10, mMix/20.0);
       break;
     
+    case kHarmOnly:
+      mHarmOnly=GetParam(kHarmOnly)->Value();
+      break;
+      
     default:
       break;
   }

@@ -6,6 +6,7 @@
 #define WDL_BESSEL_FILTER_ORDER 8
 #define WDL_BESSEL_DENORMAL_AGGRESSIVE
 #include "Biquad.h"
+#include "PeakFollower.h"
 
 class MultiDistortion : public IPlug
 {
@@ -34,6 +35,14 @@ private:
   double mClipLevel;
   bool mClipEnabled;
   double mWarm;
+  double mMeterValue;
+  
+  IBitmapControl* mMeterR;
+  IBitmapControl* mMeterL;
+
+  PeakFollower* mPeakFollower;
+  PeakFollower* mPeakFollower2;
+
  // Filter mLowCutFilter;
  // Filter mHiCutFilter;
 };
