@@ -111,8 +111,12 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   
   
   //Initialize Smoothers
-  mDriveSmoother = new CParamSmooth(7.0, GetSampleRate());
-  mHPFSmoother = new CParamSmooth(7.0, GetSampleRate());
+  mDriveSmoother = new CParamSmooth(5.0, GetSampleRate());
+  mHPFSmoother = new CParamSmooth(5.0, GetSampleRate());
+  mMixSmoother = new CParamSmooth(5.0, GetSampleRate());
+  
+  
+  //Initalize Parameters
   //arguments are: name, defaultVal, minVal, maxVal, step, label
   
   GetParam(kDistType)->InitInt("Type", 1, 1, 4);
@@ -233,8 +237,8 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
     double* output = outputs[i];
     
     for (int s = 0; s < nFrames; ++s, ++input, ++output) {
-      double preGain = pow(10, mDrive/20.0);
-      double postGain = pow(10, -mDrive/40.0);
+      double preGain = DBToAmp(mDriveSmoother->process(mDrive));
+      double postGain = -preGain;
       
   
       double sample = *input;
@@ -251,10 +255,9 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
     
       sample*=preGain;
       
-
+      //Soft Asymmetric Distortion
       if (mDistType==1) {
-        
-        double threshold = 0.95 - (mAmount/40.0);
+        double threshold = 0.9;
   
         if(sample>threshold)
           sample = threshold + (sample - threshold) / (1 + pow(((sample - threshold)/(1 - threshold)), 2));
@@ -264,25 +267,26 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
       
       
       
-      // Assymetric Distortion
+      // Symmetric Distortion
       if(mDistType==2){
-        sample = (1/ (mAmount/2.0)) * fastAtan(sample * mAmount);
-        //sample *= pow(10, mAmount/20.0);
+        double amount = 4;
+        sample = (1.1) * fastAtan(sample * amount);
+        //sample *= DBToAmp(mDrive/2);
       }
     
     
 
      //Sine Shaper
       if(mDistType==3){
-        double amount = fabs(mAmount - .3);
+        double amount = 1.44;
         double z = M_PI * amount/4.0;
         double s = 1/sin(z);
         double b = 1 / amount;
       
         if (sample>b)
-          sample = 1;
+          sample = sample + (1-sample)*0.8;
         else if (sample < - b)
-          sample = -1;
+          sample = sample + (-1-sample)*0.8;
         else
           sample = sin(z * sample) * s;
         
@@ -296,6 +300,7 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
         if (sample > threshold || sample < - threshold) {
           sample = fabs(fabs(fmod(sample - threshold, threshold * 4)) - threshold * 2) - threshold;
         }
+        
       }
       
       
@@ -313,6 +318,7 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
       sample=mhighPass->processAudioSample(sample, i);
       
       
+      //Apply Gain Compensation
       sample*=postGain;
   
       
@@ -357,11 +363,12 @@ void MultiDistortion::OnParamChange(int paramIdx)
   switch (paramIdx)
   {
     case kDrive:
-      mDrive = mDriveSmoother->process(GetParam(kDrive)->Value());
+      //mDrive = mDriveSmoother->process(GetParam(kDrive)->Value());
+      mDrive=GetParam(kDrive)->Value();
       break;
 
     case kMix:
-      mMix = GetParam(kMix)->Value()/100.0;
+      mMix = mMixSmoother->process(GetParam(kMix)->Value()/100.0);
       break;
     
     case kClipLevel:
