@@ -5,8 +5,9 @@
 
 #define WDL_BESSEL_FILTER_ORDER 8
 #define WDL_BESSEL_DENORMAL_AGGRESSIVE
-#include "Biquad.h"
 #include "PeakFollower.h"
+#include "VAStateVariableFilter.h"
+#include "CParamSmooth.h"
 
 class MultiDistortion : public IPlug
 {
@@ -20,31 +21,42 @@ public:
   double fastAtan(double x);
   
 private:
-  //const int mOversampling;
   
   const double mDC;
-  double mDistortedDC;
   
-  Biquad lowPeak;
-  Biquad highShelf;
-  
+
   double mDrive;
   double mMix;
   int mDistType;
   double mAmount;
   double mClipLevel;
   bool mClipEnabled;
-  double mWarm;
-  double mMeterValue;
+  bool mFat;
+  double mMeterLValue;
+  double mMeterRValue;
+  double mHighPassCutoff;
+  double mLowPassCutoff;
+  bool mSmoothFilter;
   
   IBitmapControl* mMeterR;
   IBitmapControl* mMeterL;
 
+  IBitmapControl* mDisplay;
+  
   PeakFollower* mPeakFollower;
   PeakFollower* mPeakFollower2;
+  
+  VAStateVariableFilter* mlowPass;
+  VAStateVariableFilter* mhighPass;
+  VAStateVariableFilter* mlowPeak;
+  
+  CParamSmooth* mDriveSmoother;
+  CParamSmooth* mMixSmoother;
+  CParamSmooth* mHPFSmoother;
+  CParamSmooth* mLPFSmoother;
 
- // Filter mLowCutFilter;
- // Filter mHiCutFilter;
+  
+
 };
 
 #endif

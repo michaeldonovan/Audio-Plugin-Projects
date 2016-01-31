@@ -12,6 +12,8 @@ public:
     PeakFollower();
     ~PeakFollower();
     float process(double input, double sampleRate);
+    float process2(double input, double sampleRate);
+
 };
 
 

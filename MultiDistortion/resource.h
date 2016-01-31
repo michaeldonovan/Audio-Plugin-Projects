@@ -16,8 +16,8 @@
 #define VIEW_CLASS_STR "MultiDistortion_View"
 
 // Format        0xMAJR.MN.BG - in HEX! so version 10.1.5 would be 0x000A0105
-#define PLUG_VER 0x00000200
-#define VST3_VER_STR "0.2.0"
+#define PLUG_VER 0x00000300
+#define VST3_VER_STR "0.3.0"
 
 // http://service.steinberg.de/databases/plugin.nsf/plugIn?openForm
 // 4 chars, single quotes. At least one capital letter
@@ -58,15 +58,23 @@ instrument determined by PLUG _IS _INST
 #define BIGKNOB_ID 102
 #define SMALLKNOB_ID 103
 #define LEVELMETER_ID 104
+#define BUTTON_ID 105
+#define DISPLAY_ID 106
+#define LPF_ID 107
+#define HPF_ID 108
 
 // Image resource locations for this plug.
-#define BACKGROUND_FN "resources/img/Background-wide.png"
+#define BACKGROUND_FN "resources/img/Background650.png"
 #define BIGKNOB_FN "resources/img/BigKnobAction.png"
 #define SMALLKNOB_FN "resources/img/SmallKnobAction.png"
 #define LEVELMETER_FN "resources/img/MeterAction.png"
+#define BUTTON_FN "resources/img/Button.png"
+#define DISPLAY_FN "resources/img/Display.png"
+#define LPF_FN "resources/img/LPFAction.png"
+#define HPF_FN "resources/img/HPFAction.png"
 
 // GUI default dimensions
-#define GUI_WIDTH 600
+#define GUI_WIDTH 650
 #define GUI_HEIGHT 325
 
 // on MSVC, you must define SA_API in the resource editor preprocessor macros as well as the c++ ones
