@@ -40,7 +40,7 @@ HarmonicExciter::HarmonicExciter(IPlugInstanceInfo instanceInfo)
   GetParam(kType)->InitInt("Type", 1, 1, 3);
   GetParam(kType)->SetShape(1.0);
 
-  GetParam(kDrive)->InitDouble("Input Gain", 0.0, 0.0, 18.0, 0.01, "dB");
+  GetParam(kDrive)->InitDouble("Drive", 0.0, 0.0, 18.0, 0.01, "dB");
   GetParam(kDrive)->SetShape(1.0);
 
   GetParam(kFreq)->InitDouble("Frequency", 2200.0, 1750.0, 7000.00, 1.0, "Hz");
@@ -52,8 +52,12 @@ HarmonicExciter::HarmonicExciter(IPlugInstanceInfo instanceInfo)
   GetParam(kHarmOnly)->InitBool("Harmonics Only", TRUE);
   
   //Initialize Filter
-  highPass.setBiquad(bq_type_highpass, 2200.0 / GetSampleRate(), .707, 0.0);
-
+  mHighPass=new VAStateVariableFilter();
+  mHighPass->setSampleRate(GetSampleRate());
+  mHighPass->setFilterType(SVFHighpass);
+  mHighPass->setCutoffFreq(2200.0);
+  mHighPass->setQ(0.707);
+  
   //MakePreset("preset 1", ... );
   MakeDefaultPreset((char *) "-", kNumPrograms);
   
@@ -72,10 +76,12 @@ void HarmonicExciter::ProcessDoubleReplacing(double** inputs, double** outputs, 
     
     
     for (int s = 0; s < nFrames; ++s, ++input, ++output) {
-      double preGain = pow(10, mDrive/20.0);
-  
+     
       double sample = *input;
       double drySample = sample;
+      
+      double preGain = DBToAmp(mDrive);
+      double postGain = -preGain;
       
       //Drive
       sample*=preGain;
@@ -83,7 +89,7 @@ void HarmonicExciter::ProcessDoubleReplacing(double** inputs, double** outputs, 
       
       
       //High-pass
-      sample = highPass.process(sample);
+      sample = mHighPass->processAudioSample(sample, i);
       //sample = highPass.process(sample);
 
 
@@ -157,7 +163,7 @@ void HarmonicExciter::OnParamChange(int paramIdx)
 
     case kFreq:
       mFreq = GetParam(kFreq)->Value();
-      highPass.Biquad::setFc(mFreq/GetSampleRate());
+      mHighPass->setCutoffFreq(mFreq);
       break;
       
     case kMix:

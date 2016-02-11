@@ -70,8 +70,8 @@ instrument determined by PLUG _IS _INST
 #define LEVELMETER_FN "resources/img/MeterAction.png"
 #define BUTTON_FN "resources/img/Button.png"
 #define DISPLAY_FN "resources/img/Display.png"
-#define LPF_FN "resources/img/LPFAction.png"
-#define HPF_FN "resources/img/HPFAction.png"
+#define LPF_FN "resources/img/LPFNotches.png"
+#define HPF_FN "resources/img/HPFNotches.png"
 
 // GUI default dimensions
 #define GUI_WIDTH 650

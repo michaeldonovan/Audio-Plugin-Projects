@@ -12,11 +12,10 @@ enum EParams
 {
   kDistType=0,
   kDrive,
-  kAmount,
-  kFat,
   kHighPassCutoff,
   kLowPassCutoff,
   kMix,
+  kOutputGain,
   kClipEnabled,
   kClipLevel,
   kNumParams
@@ -31,16 +30,15 @@ enum ELayout
   kDriveX = -18,
   kDriveY = -5,
   
-  kShapeX = 289,
-  kShapeY = 192,
+  kOutputGainX = 386,
+  kOutputGainY = 192,
   
   kClipX = 386,
   kClipY = 50,
+
+
   
-  kFatX = 289,
-  kFatY = 182,
-  
-  kMixX = 386,
+  kMixX = 289,
   kMixY = 192,
   
   kFilterX = 487,
@@ -76,7 +74,7 @@ enum ELayout
 };
 
 MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
-  :	IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo),  mDC(0.25), mDrive(1.)
+  :	IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo),  mDistType(1), mDrive(1.), mMix(100.), mLowPassCutoff(20000.), mHighPassCutoff(0.)
 {
   TRACE;
 
@@ -90,7 +88,14 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   //Initialize Filters
   mlowPass = new VAStateVariableFilter();
   mhighPass = new VAStateVariableFilter();
+  mlowPeak = new VAStateVariableFilter();
+
+
+  mlowPass->setSampleRate(GetSampleRate());
+  mhighPass->setSampleRate(GetSampleRate());
+  mlowPeak->setSampleRate(GetSampleRate());
   
+
   mlowPass->setFilterType(SVFLowpass);
   mlowPass->setCutoffFreq(200000);
   mlowPass->setQ(0.8);
@@ -99,38 +104,34 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   mhighPass->setCutoffFreq(0);
   mhighPass->setQ(0.6);
   
-  mlowPeak = new VAStateVariableFilter();
   mlowPeak->setFilterType(SVFBandShelving);
   mlowPeak->setCutoffFreq(85.0);
   mlowPeak->setShelfGain(1.75);
   mlowPeak->setResonance(0.15);
   
-  mlowPass->setSampleRate(GetSampleRate());
-  mhighPass->setSampleRate(GetSampleRate());
-  mlowPeak->setSampleRate(GetSampleRate());
-  
+
   
   //Initialize Smoothers
   mDriveSmoother = new CParamSmooth(5.0, GetSampleRate());
   mHPFSmoother = new CParamSmooth(5.0, GetSampleRate());
   mMixSmoother = new CParamSmooth(5.0, GetSampleRate());
-  
+  mOutputGainSmoother = new CParamSmooth(5.0, GetSampleRate());
+
   
   //Initalize Parameters
   //arguments are: name, defaultVal, minVal, maxVal, step, label
   
   GetParam(kDistType)->InitInt("Type", 1, 1, 4);
 
-  GetParam(kDrive)->InitDouble("Input Gain", 0.0, 0.0, 18.0, 0.000001, "dB");
+  GetParam(kDrive)->InitDouble("Input Gain", 0.0, 0.0, 18.0, 0.0001, "dB");
   GetParam(kDrive)->SetShape(1.0);
 
-  GetParam(kAmount)->InitDouble("Saturation", 12.5, 0.01, 100.0, 0.000001, "%");
-  GetParam(kAmount)->SetShape(1.0);
+  GetParam(kOutputGain)->InitDouble("Output Gain", 0., -36., 0., 0.0001, "dB");
+  GetParam(kOutputGain)->SetShape(1.0);
   
-  GetParam(kFat)->InitBool("Fat", FALSE);
 
   GetParam(kMix)->InitDouble("Mix", 100.0, 0.0, 100.0, 0.000001, "%");
-  GetParam(kMix)->SetShape(1.0);
+  GetParam(kMix)->SetShape(2.0);
   
   GetParam(kClipLevel)->InitDouble("Clip Level", 0, -18.0, 0.0, 0.000001, "dB");
   GetParam(kClipLevel)->SetShape(1.0);
@@ -148,35 +149,27 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   
   pGraphics->AttachBackground(BACKGROUND_ID, BACKGROUND_FN);
   
+  //Load Bitmaps
+  
   IBitmap bigKnob = pGraphics->LoadIBitmap(BIGKNOB_ID, BIGKNOB_FN, kBigKnobFrames);
   IBitmap smallKnob1 = pGraphics->LoadIBitmap(SMALLKNOB_ID, SMALLKNOB_FN, kSmallKnobFrames);
   IBitmap smallKnob2 = pGraphics->LoadIBitmap(SMALLKNOB_ID, SMALLKNOB_FN, kSmallKnobFrames);
-  IBitmap smallKnob3 = pGraphics->LoadIBitmap(SMALLKNOB_ID, SMALLKNOB_FN, kSmallKnobFrames);
-  IBitmap smallKnob4 = pGraphics->LoadIBitmap(SMALLKNOB_ID, SMALLKNOB_FN, kSmallKnobFrames);
   IBitmap levelMeterR = pGraphics->LoadIBitmap(LEVELMETER_ID, LEVELMETER_FN, kLevelMeterFrames);
   IBitmap levelMeterL = pGraphics->LoadIBitmap(LEVELMETER_ID, LEVELMETER_FN, kLevelMeterFrames);
   IBitmap buttons = pGraphics->LoadIBitmap(BUTTON_ID, BUTTON_FN, 2);
-  
   IBitmap display = pGraphics->LoadIBitmap(DISPLAY_ID, DISPLAY_FN,kDiplayFrames);
-
-  pGraphics->AttachControl(new IKnobMultiControl(this, kShapeX, kShapeY, kAmount, &smallKnob1));
-  //pGraphics->AttachControl(new IKnobMultiControl(this, kClipX, kClipY, kClipLevel, &smallKnob2));
-  //pGraphics->AttachControl(new IKnobMultiControl(this, kFatX, kFatY, kFat, &smallKnob3));
-  pGraphics->AttachControl(new IKnobMultiControl(this, kMixX, kMixY, kMix, &smallKnob4));
-
-  pGraphics->AttachControl(new IKnobMultiControl(this, kDriveX, kDriveY, kDrive, &bigKnob));
-  
-  //Filters
   IBitmap LPF = pGraphics->LoadIBitmap(LPF_ID, LPF_FN, kFilterFrames);
   IBitmap HPF = pGraphics->LoadIBitmap(HPF_ID, HPF_FN, kFilterFrames);
   
+
+  
+  //Filter Sliders
   pGraphics->AttachControl(new IKnobMultiControl(this, kFilterX, kFilterY, kLowPassCutoff, &LPF));
   pGraphics->AttachControl(new IKnobMultiControl(this, kFilterX, kFilterY+101, kHighPassCutoff, &HPF));
   
   //Type Selector Button
   pGraphics->AttachControl(new IRadioButtonsControl(this, IRECT(kButtonsX, kButtonsY, kButtonsX+(kButtons_W*kButtons_N), kButtonsY+(kButtons_H)),kDistType,kButtons_N,&buttons, kHorizontal));
-  
-  
+
   
   //Button Labels
   IColor pColor = IColor(200,255,255,205);
@@ -184,8 +177,8 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   pGraphics->AttachControl(new ITextControl(this, IRECT((kButtonsX+kButtonLabelOffsetX+4), (kButtonsY+kButtonLabelOffsetY), (kButtonsX+kButtonLabelOffsetX), (kButtonsY+kButtonLabelOffsetY)), &text, "A "));
   
   pGraphics->AttachControl(new ITextControl(this, IRECT((kButtonsX+kButtonLabelOffsetX+4+kButtons_W), (kButtonsY+kButtonLabelOffsetY), (kButtonsX+kButtonLabelOffsetX+kButtons_W+4), (kButtonsY+kButtonLabelOffsetY)), &text, "B "));
-  pGraphics->AttachControl(new ITextControl(this, IRECT((kButtonsX+kButtonLabelOffsetX+4+(2*kButtons_W)), (kButtonsY+kButtonLabelOffsetY), (kButtonsX+kButtonLabelOffsetX+(2*kButtons_W)), (kButtonsY+kButtonLabelOffsetY)), &text, "C "));
-  pGraphics->AttachControl(new ITextControl(this, IRECT((kButtonsX+kButtonLabelOffsetX+4+(3*kButtons_W)), (kButtonsY+kButtonLabelOffsetY), (kButtonsX+kButtonLabelOffsetX+(3*kButtons_W)), (kButtonsY+kButtonLabelOffsetY)), &text, "D "));
+  pGraphics->AttachControl(new ITextControl(this, IRECT((kButtonsX+kButtonLabelOffsetX+6+(2*kButtons_W)), (kButtonsY+kButtonLabelOffsetY), (kButtonsX+kButtonLabelOffsetX+(2*kButtons_W)), (kButtonsY+kButtonLabelOffsetY)), &text, "C "));
+  pGraphics->AttachControl(new ITextControl(this, IRECT((kButtonsX+kButtonLabelOffsetX+11+(3*kButtons_W)), (kButtonsY+kButtonLabelOffsetY), (kButtonsX+kButtonLabelOffsetX+(3*kButtons_W)), (kButtonsY+kButtonLabelOffsetY)), &text, "D  "));
   
   //Display
   IRECT zr;
@@ -194,11 +187,8 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   mDisplay->SetTargetArea(zr);
   
   //Knobs
-  pGraphics->AttachControl(new IKnobMultiControl(this, kShapeX, kShapeY, kAmount, &smallKnob1));
-  //pGraphics->AttachControl(new IKnobMultiControl(this, kClipX, kClipY, kClipLevel, &smallKnob2));
-  //pGraphics->AttachControl(new IKnobMultiControl(this, kFatX, kFatY, kFat, &smallKnob3));
-  pGraphics->AttachControl(new IKnobMultiControl(this, kMixX, kMixY, kMix, &smallKnob4));
-  
+  pGraphics->AttachControl(new IKnobMultiControl(this, kOutputGainX, kOutputGainY, kOutputGain, &smallKnob1));
+  pGraphics->AttachControl(new IKnobMultiControl(this, kMixX, kMixY, kMix, &smallKnob2));
   pGraphics->AttachControl(new IKnobMultiControl(this, kDriveX, kDriveY, kDrive, &bigKnob));
 
   
@@ -218,8 +208,6 @@ MultiDistortion::MultiDistortion(IPlugInstanceInfo instanceInfo)
   AttachGraphics(pGraphics);
   
   
-
-  
   //MakePreset("preset 1", ... );
   MakeDefaultPreset((char *) "-", kNumPrograms);
   
@@ -238,21 +226,14 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
     
     for (int s = 0; s < nFrames; ++s, ++input, ++output) {
       double preGain = DBToAmp(mDriveSmoother->process(mDrive));
-      double postGain = -preGain;
+      double gainComp = -preGain;
       
   
       double sample = *input;
       double drySample = sample;
-      
-      //Update input meter
-      if (GetGUI()) {
-        mMeterL->SetValueFromPlug(log10(mPeakFollower->process2(*input, GetSampleRate())) +1);
-      }
-      
-      
-      
-      //Distort
     
+      
+      //Apply drive
       sample*=preGain;
       
       //Soft Asymmetric Distortion
@@ -269,16 +250,15 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
       
       // Symmetric Distortion
       if(mDistType==2){
-        double amount = 4;
-        sample = (1.1) * fastAtan(sample * amount);
-        //sample *= DBToAmp(mDrive/2);
+        double amount = 3;
+        sample =  fastAtan(sample * amount);
       }
     
     
 
      //Sine Shaper
       if(mDistType==3){
-        double amount = 1.44;
+        double amount = 1.6;
         double z = M_PI * amount/4.0;
         double s = 1/sin(z);
         double b = 1 / amount;
@@ -296,37 +276,33 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
       
         //FoldBack Distortion
       if (mDistType==4) {
-        double threshold = 1.0 - (mAmount/10.0);
+        double threshold = .9;
         if (sample > threshold || sample < - threshold) {
           sample = fabs(fabs(fmod(sample - threshold, threshold * 4)) - threshold * 2) - threshold;
         }
         
       }
       
-      
-    
-    
-      //Fat
-      if (mFat) {
-        sample = mlowPeak->processAudioSample(sample, i);
-      }
-      
+
       //filters
       sample=mlowPass->processAudioSample(sample, i);
-      sample=mlowPass->processAudioSample(sample, i);
-      sample=mhighPass->processAudioSample(sample, i);
       sample=mhighPass->processAudioSample(sample, i);
       
       
       //Apply Gain Compensation
-      sample*=postGain;
+      sample*=gainComp;
   
       
       
       //Mix
-      sample=mMix*sample + (1.0-mMix)*drySample;
+      double mix= mMixSmoother->process(mMix);
+      sample=mix*sample + (1.0-mix)*drySample;
       
-  
+      
+      //Apply Post Gain
+      sample *= DBToAmp(mOutputGainSmoother->process(mOutputGain));
+
+      
       //Clipping
       if(mClipEnabled)
       {
@@ -340,7 +316,10 @@ void MultiDistortion::ProcessDoubleReplacing(double** inputs, double** outputs, 
       
       //Update Meters
       if(GetGUI()){
-        mMeterR->SetValueFromPlug(log10(mPeakFollower2->process(sample, GetSampleRate())) +1);
+          mMeterL->SetValueFromPlug(log10(mPeakFollower->process2(*input, GetSampleRate())) +1);
+
+          mMeterR->SetValueFromPlug(log10(mPeakFollower2->process(sample, GetSampleRate())) +1);
+        
         
       }
       
@@ -368,7 +347,7 @@ void MultiDistortion::OnParamChange(int paramIdx)
       break;
 
     case kMix:
-      mMix = mMixSmoother->process(GetParam(kMix)->Value()/100.0);
+      mMix = (GetParam(kMix)->Value()/100.0);
       break;
     
     case kClipLevel:
@@ -376,8 +355,8 @@ void MultiDistortion::OnParamChange(int paramIdx)
       break;
       
       
-    case kAmount:
-      mAmount = 3 * (GetParam(kAmount)->Value() / 100) ;
+    case kOutputGain:
+      mOutputGain = GetParam(kOutputGain)->Value() ;
       break;
       
       
@@ -399,11 +378,7 @@ void MultiDistortion::OnParamChange(int paramIdx)
     case kClipEnabled:
       mClipEnabled = GetParam(kClipEnabled)->Value();
       break;
-     
-    case kFat:
-      mFat = GetParam(kFat)->Value();
-      break;
-      
+  
     default:
       break;
   }

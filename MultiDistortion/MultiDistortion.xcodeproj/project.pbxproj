@@ -76,8 +76,6 @@
 		4C42E4961C5DF8220041EB11 /* CParamSmooth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C42E48F1C5DF8220041EB11 /* CParamSmooth.cpp */; };
 		4C42E4971C5DF8220041EB11 /* CParamSmooth.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C42E4901C5DF8220041EB11 /* CParamSmooth.h */; };
 		4C42E4981C5DF8220041EB11 /* CParamSmooth.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C42E4901C5DF8220041EB11 /* CParamSmooth.h */; };
-		4C4C4AFC1C3480D9005D264F /* denormal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4C4AFB1C3480D9005D264F /* denormal.h */; };
-		4C4C4AFD1C3480D9005D264F /* denormal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4C4AFB1C3480D9005D264F /* denormal.h */; };
 		4CA6BB2A1C5BECF100A4EAFC /* PeakFollower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6BB281C5BECF100A4EAFC /* PeakFollower.cpp */; };
 		4CA6BB2B1C5BECF100A4EAFC /* PeakFollower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6BB281C5BECF100A4EAFC /* PeakFollower.cpp */; };
 		4CA6BB2C1C5BECF100A4EAFC /* PeakFollower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6BB281C5BECF100A4EAFC /* PeakFollower.cpp */; };
@@ -108,6 +106,18 @@
 		4CA6BB641C5C781B00A4EAFC /* DSPUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6BB5D1C5C781B00A4EAFC /* DSPUtilities.cpp */; };
 		4CA6BB651C5C781B00A4EAFC /* DSPUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA6BB5E1C5C781B00A4EAFC /* DSPUtilities.h */; };
 		4CA6BB661C5C781B00A4EAFC /* DSPUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA6BB5E1C5C781B00A4EAFC /* DSPUtilities.h */; };
+		4CCFD67F1C5EDCFC00712A98 /* HPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */; };
+		4CCFD6801C5EDCFC00712A98 /* HPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */; };
+		4CCFD6811C5EDCFC00712A98 /* HPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */; };
+		4CCFD6821C5EDCFC00712A98 /* HPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */; };
+		4CCFD6831C5EDCFC00712A98 /* HPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */; };
+		4CCFD6841C5EDCFC00712A98 /* HPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */; };
+		4CCFD6851C5EDCFC00712A98 /* LPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */; };
+		4CCFD6861C5EDCFC00712A98 /* LPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */; };
+		4CCFD6871C5EDCFC00712A98 /* LPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */; };
+		4CCFD6881C5EDCFC00712A98 /* LPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */; };
+		4CCFD6891C5EDCFC00712A98 /* LPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */; };
+		4CCFD68A1C5EDCFC00712A98 /* LPFNotches.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */; };
 		4F1F1BEA135B1F60003A5BB2 /* wdlendian.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F1F1BE9135B1F60003A5BB2 /* wdlendian.h */; };
 		4F20EECB132C69FE0030E34C /* MultiDistortion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FBBED00D0CF139001C8B8A /* MultiDistortion.cpp */; };
 		4F20EF2D132C69FE0030E34C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -524,7 +534,6 @@
 		4C42E4881C5DE95B0041EB11 /* Background650.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background650.png; path = resources/img/Background650.png; sourceTree = "<group>"; };
 		4C42E48F1C5DF8220041EB11 /* CParamSmooth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CParamSmooth.cpp; sourceTree = "<group>"; };
 		4C42E4901C5DF8220041EB11 /* CParamSmooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CParamSmooth.h; sourceTree = "<group>"; };
-		4C4C4AFB1C3480D9005D264F /* denormal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = denormal.h; sourceTree = "<group>"; };
 		4CA6BB281C5BECF100A4EAFC /* PeakFollower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PeakFollower.cpp; sourceTree = "<group>"; };
 		4CA6BB291C5BECF100A4EAFC /* PeakFollower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeakFollower.h; sourceTree = "<group>"; };
 		4CA6BB3B1C5C0ABB00A4EAFC /* MeterAction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MeterAction.png; path = resources/img/MeterAction.png; sourceTree = "<group>"; };
@@ -532,6 +541,8 @@
 		4CA6BB4D1C5C697600A4EAFC /* VAStateVariableFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAStateVariableFilter.h; sourceTree = "<group>"; };
 		4CA6BB5D1C5C781B00A4EAFC /* DSPUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DSPUtilities.cpp; sourceTree = "<group>"; };
 		4CA6BB5E1C5C781B00A4EAFC /* DSPUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSPUtilities.h; sourceTree = "<group>"; };
+		4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HPFNotches.png; path = resources/img/HPFNotches.png; sourceTree = "<group>"; };
+		4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LPFNotches.png; path = resources/img/LPFNotches.png; sourceTree = "<group>"; };
 		4F017360154D4BFC0034BE1A /* AAX_CIPlugParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AAX_CIPlugParameters.cpp; path = ../../WDL/IPlug/AAX/AAX_CIPlugParameters.cpp; sourceTree = SOURCE_ROOT; };
 		4F017361154D4BFC0034BE1A /* AAX_CIPlugParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAX_CIPlugParameters.h; path = ../../WDL/IPlug/AAX/AAX_CIPlugParameters.h; sourceTree = SOURCE_ROOT; };
 		4F1F1BE9135B1F60003A5BB2 /* wdlendian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wdlendian.h; path = ../../WDL/wdlendian.h; sourceTree = SOURCE_ROOT; };
@@ -825,7 +836,6 @@
 			isa = PBXGroup;
 			children = (
 				52FBBED30D0CF143001C8B8A /* resource.h */,
-				4C4C4AFB1C3480D9005D264F /* denormal.h */,
 				52FBBED20D0CF13D001C8B8A /* MultiDistortion.h */,
 				52FBBED00D0CF139001C8B8A /* MultiDistortion.cpp */,
 				4C42E4991C5DF82C0041EB11 /* Utils */,
@@ -1371,6 +1381,8 @@
 		4FD16A0213B6303B001D0217 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				4CCFD67D1C5EDCFC00712A98 /* HPFNotches.png */,
+				4CCFD67E1C5EDCFC00712A98 /* LPFNotches.png */,
 				4C42E4881C5DE95B0041EB11 /* Background650.png */,
 				4C42E46C1C5DE0100041EB11 /* HPFAction.png */,
 				4C42E46D1C5DE0100041EB11 /* LPFAction.png */,
@@ -1463,7 +1475,6 @@
 				4F3AE17B12C0E5E2001FD7A4 /* resource.h in Headers */,
 				4F3AE17C12C0E5E2001FD7A4 /* MultiDistortion.h in Headers */,
 				4FF016F7134E14E2001447BA /* mutex.h in Headers */,
-				4C4C4AFD1C3480D9005D264F /* denormal.h in Headers */,
 				4FF016F8134E14E2001447BA /* ptrlist.h in Headers */,
 				4FF016F9134E14E2001447BA /* wdlstring.h in Headers */,
 				4FD16D1913B634E5001D0217 /* swell.h in Headers */,
@@ -1541,7 +1552,6 @@
 				4F78DA9F13B640050032E0F3 /* Log.h in Headers */,
 				4F78DAA013B640050032E0F3 /* IPopupMenu.h in Headers */,
 				4F78DAA113B640050032E0F3 /* IPlugStructs.h in Headers */,
-				4C4C4AFC1C3480D9005D264F /* denormal.h in Headers */,
 				4F78DAA213B640050032E0F3 /* IPlug_Prefix.pch in Headers */,
 				4F78DAA313B640050032E0F3 /* IParam.h in Headers */,
 				4F78DAA413B640050032E0F3 /* IMidiQueue.h in Headers */,
@@ -1786,8 +1796,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C42E4751C5DE0100041EB11 /* LPFAction.png in Resources */,
+				4CCFD6861C5EDCFC00712A98 /* LPFNotches.png in Resources */,
 				4C0F73B61C5B246B0029B40E /* BigKnobAction.png in Resources */,
 				4CA6BB3D1C5C0ABB00A4EAFC /* MeterAction.png in Resources */,
+				4CCFD6801C5EDCFC00712A98 /* HPFNotches.png in Resources */,
 				4C0F74DB1C5B555C0029B40E /* SmallKnobAction.png in Resources */,
 				4C42E4671C5DC0DF0041EB11 /* Display.png in Resources */,
 				4C42E45E1C5DBA770041EB11 /* Button.png in Resources */,
@@ -1801,8 +1813,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C42E4771C5DE0100041EB11 /* LPFAction.png in Resources */,
+				4CCFD6881C5EDCFC00712A98 /* LPFNotches.png in Resources */,
 				4C0F73B81C5B246B0029B40E /* BigKnobAction.png in Resources */,
 				4CA6BB3F1C5C0ABB00A4EAFC /* MeterAction.png in Resources */,
+				4CCFD6821C5EDCFC00712A98 /* HPFNotches.png in Resources */,
 				4C0F74DD1C5B555C0029B40E /* SmallKnobAction.png in Resources */,
 				4C42E4691C5DC0DF0041EB11 /* Display.png in Resources */,
 				4C42E4601C5DBA770041EB11 /* Button.png in Resources */,
@@ -1816,8 +1830,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C42E4781C5DE0100041EB11 /* LPFAction.png in Resources */,
+				4CCFD6891C5EDCFC00712A98 /* LPFNotches.png in Resources */,
 				4C0F73B91C5B246B0029B40E /* BigKnobAction.png in Resources */,
 				4CA6BB401C5C0ABB00A4EAFC /* MeterAction.png in Resources */,
+				4CCFD6831C5EDCFC00712A98 /* HPFNotches.png in Resources */,
 				4C0F74DE1C5B555C0029B40E /* SmallKnobAction.png in Resources */,
 				4C42E46A1C5DC0DF0041EB11 /* Display.png in Resources */,
 				4C42E4611C5DBA770041EB11 /* Button.png in Resources */,
@@ -1831,8 +1847,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C42E4761C5DE0100041EB11 /* LPFAction.png in Resources */,
+				4CCFD6871C5EDCFC00712A98 /* LPFNotches.png in Resources */,
 				4C0F73B71C5B246B0029B40E /* BigKnobAction.png in Resources */,
 				4CA6BB3E1C5C0ABB00A4EAFC /* MeterAction.png in Resources */,
+				4CCFD6811C5EDCFC00712A98 /* HPFNotches.png in Resources */,
 				4C0F74DC1C5B555C0029B40E /* SmallKnobAction.png in Resources */,
 				4C42E4681C5DC0DF0041EB11 /* Display.png in Resources */,
 				4C42E45F1C5DBA770041EB11 /* Button.png in Resources */,
@@ -1846,8 +1864,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C42E4791C5DE0100041EB11 /* LPFAction.png in Resources */,
+				4CCFD68A1C5EDCFC00712A98 /* LPFNotches.png in Resources */,
 				4C0F73BA1C5B246B0029B40E /* BigKnobAction.png in Resources */,
 				4CA6BB411C5C0ABB00A4EAFC /* MeterAction.png in Resources */,
+				4CCFD6841C5EDCFC00712A98 /* HPFNotches.png in Resources */,
 				4C0F74DF1C5B555C0029B40E /* SmallKnobAction.png in Resources */,
 				4C42E46B1C5DC0DF0041EB11 /* Display.png in Resources */,
 				4C42E4621C5DBA770041EB11 /* Button.png in Resources */,
@@ -1860,9 +1880,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CCFD6851C5EDCFC00712A98 /* LPFNotches.png in Resources */,
 				4C42E46E1C5DE0100041EB11 /* HPFAction.png in Resources */,
 				4C42E4661C5DC0DF0041EB11 /* Display.png in Resources */,
 				4F78D88613B6382B0032E0F3 /* MultiDistortion.icns in Resources */,
+				4CCFD67F1C5EDCFC00712A98 /* HPFNotches.png in Resources */,
 				4C42E4741C5DE0100041EB11 /* LPFAction.png in Resources */,
 				4C0F74DA1C5B555C0029B40E /* SmallKnobAction.png in Resources */,
 				4C0F73B51C5B246B0029B40E /* BigKnobAction.png in Resources */,

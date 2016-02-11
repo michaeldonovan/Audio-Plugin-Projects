@@ -1,6 +1,6 @@
 [Setup]
 AppName=MultiDistortion
-AppVersion=1.0.0
+AppVersion=0.3.1
 DefaultDirName={pf}\MultiDistortion
 DefaultGroupName=MultiDistortion
 Compression=lzma2

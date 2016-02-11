@@ -486,7 +486,7 @@
 				<key>RELOCATABLE</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.0.0</string>
+				<string>0.3.1</string>
 			</dict>
 			<key>UUID</key>
 			<string>4C138DB1-9734-45F0-8A00-6E362896C22C</string>
@@ -1024,7 +1024,7 @@
 				<key>RELOCATABLE</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.0.0</string>
+				<string>0.3.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -1564,7 +1564,7 @@
 				<key>RELOCATABLE</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.0.0</string>
+				<string>0.3.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2104,7 +2104,7 @@
 				<key>RELOCATABLE</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.0.0</string>
+				<string>0.3.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2627,7 +2627,7 @@
 				<key>RELOCATABLE</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.0.0</string>
+				<string>0.3.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -3167,7 +3167,7 @@
 				<key>RELOCATABLE</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.0.0</string>
+				<string>0.3.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>

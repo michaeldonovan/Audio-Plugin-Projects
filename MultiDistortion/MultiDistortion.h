@@ -21,14 +21,12 @@ public:
   double fastAtan(double x);
   
 private:
-  
-  const double mDC;
-  
+    
 
   double mDrive;
   double mMix;
   int mDistType;
-  double mAmount;
+  double mOutputGain;
   double mClipLevel;
   bool mClipEnabled;
   bool mFat;
@@ -36,7 +34,6 @@ private:
   double mMeterRValue;
   double mHighPassCutoff;
   double mLowPassCutoff;
-  bool mSmoothFilter;
   
   IBitmapControl* mMeterR;
   IBitmapControl* mMeterL;
@@ -54,6 +51,7 @@ private:
   CParamSmooth* mMixSmoother;
   CParamSmooth* mHPFSmoother;
   CParamSmooth* mLPFSmoother;
+  CParamSmooth* mOutputGainSmoother;
 
   
 

@@ -2,7 +2,7 @@
 #define __HARMONICEXCITER__
 
 #include "IPlug_include_in_plug_hdr.h"
-#include "Biquad.h"
+#include "VAStateVariableFilter.h"
 
 class HarmonicExciter : public IPlug
 {
@@ -16,7 +16,7 @@ public:
   
 private:
   
-  Biquad highPass;
+  VAStateVariableFilter* mHighPass;
   double mDrive;
   double mFreq;
   double mMix;
