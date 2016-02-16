@@ -1,0 +1,26 @@
+Add distortion type selector -- four buttons below the drive knob?
+ditch the biquads, they cause weird artifacts
+put clip level on a fader, add bypass
+probably get rid of shape/kAmount -- default it to middle value
+Warm->> Fat
+Oversampling??
+
+Clip level antialiasing/parameter smoothing?
+
+knob shape for gain knob?
+
+auto gain compensation
+
+remove units when you make your own level meter :)
+
+add light to indicate that clipper is on/have it come on when level is set to <= -0.1dB
+
+Check shape/amount values for soft sat
+
+calculate gain depending on dist algo
+
+Popping when bypass/engaged?
+
+fix mix ratio
+
+phase issues with mix - fix by delaying dry by getLatency()?
